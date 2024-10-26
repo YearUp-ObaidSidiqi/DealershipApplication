@@ -1,49 +1,44 @@
 package com.pluralsight;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
 public class DealershipFileManager{
 
-    public static ArrayList<Vehicle> vehicles;
-    static {
+
+
+    public static void ReadVehiclesFromCSV()  {
+
         try {
-            vehicles = getVehicles();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            var bufferedReader = new BufferedReader(new FileReader("vehicles.csv"));
+            String input;
+            bufferedReader.readLine();
+            while ((input = bufferedReader.readLine()) != null) {
+
+                String[] tokens = input.split(Pattern.quote("|"));
+
+                Dealership.addVehicle(
+                        Integer.parseInt(tokens[0]),  //int VIN
+                        Integer.parseInt(tokens[1]), // int year
+                        tokens[2],                  // make
+                        tokens[3],
+                        tokens[4],
+                        tokens[5],
+                        Integer.parseInt(tokens[6]),
+                        Double.parseDouble(tokens[7]));
+            }
+            bufferedReader.close();
+        }catch (Exception e){
+            System.out.println("***ERROR!! ArrayList<Vehicles>");
+            System.out.println(e.getMessage());
         }
     }
-
-    public static ArrayList<Vehicle> getVehicles() throws IOException {
-        var vehicle = new ArrayList<Vehicle>();
-
-        var bufferedReader = new BufferedReader(new FileReader("vehicles.csv"));
-        String input;
-        bufferedReader.readLine();
-        while ((input = bufferedReader.readLine()) != null) {
-
-            String[] tokens = input.split(Pattern.quote("|"));
-            vehicle.add(new Vehicle(
-                    Integer.parseInt(tokens[0]),
-                    Integer.parseInt(tokens[1]),
-                    tokens[2],
-                    tokens[3],
-                    tokens[4],
-                    tokens[5],
-                    Integer.parseInt(tokens[6]),
-                    Double.parseDouble(tokens[7])));
-        }
-        bufferedReader.close();
-        return vehicle;
-
-    }
-    public static void writeVehiclesToCSV() {
+   /* public static void writeVehiclesToCSV(Dealership dealership) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("vehicles.csv"))) {
             // Write header (if needed)
             writer.write("D & B Used Cars|111 Old Benbrook Rd|817-555-5555\n");
 
-            for (Vehicle vehicle : vehicles) {
+            for (Vehicle vehicle : dealership.vehicle ) {
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f\n",
                         vehicle.getVin(),
                         vehicle.getYear(),
@@ -59,5 +54,5 @@ public class DealershipFileManager{
             System.out.println("***ERROR!! Writing to CSV");
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 }
