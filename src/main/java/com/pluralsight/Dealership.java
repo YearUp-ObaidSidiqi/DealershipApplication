@@ -1,159 +1,120 @@
 package com.pluralsight;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Dealership {
+    private String name;
+    private String address;
+    private String phone;
 
-   static  ArrayList<Vehicle> vehicle = new ArrayList<Vehicle>();
-
-   final static String name = "D & B Used Cars";
-   final static String address = "111 Old Benbrook Rd";
-   final static String phone = "817-555-5555";
-
-    public static void addVehicle(int VIN, int Year, String Make, String Model, String Type, String Color, int Odometer, double Price) {
-        vehicle.add(new Vehicle(VIN, Year, Make, Model, Type, Color, Odometer, Price));
+    public Dealership(String name, String address, String phone) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
     }
-    public static void removeVehicle(int VIN) {
+
+      ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+    public void addVehicle(int vin, int Year, String Make, String Model, String Type, String Color, int Odometer, double Price) {
+        vehicles.add(new Vehicle(vin, Year, Make, Model, Type, Color, Odometer, Price));
+    }
+
+    public ArrayList<Vehicle> getAllVehicles() {
+        return vehicles;
+    }
+    public ArrayList<Vehicle> getVehiclesByMake(String Make) {
+        ArrayList<Vehicle> matching = new ArrayList<>();
+
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getMake().equalsIgnoreCase(Make)) {
+                matching.add(vehicle);
+            }
+        }
+        return matching;
+    }
+    public void removeVehicle(int VIN) {
         Vehicle vehicleToRemove = null;
 
-        // Search for the vehicle with the specified VIN
-        for (Vehicle vehicle : vehicle) {
+        for (Vehicle vehicle : vehicles) {
             if (vehicle.getVin() == VIN) {
                 vehicleToRemove = vehicle;
                 break;
             }
         }
-
-        // Remove the vehicle if it was found
         if (vehicleToRemove != null) {
-            vehicle.remove(vehicleToRemove);
+            vehicles.remove(vehicleToRemove);
             System.out.println("Vehicle with VIN " + VIN + " removed.");
         } else {
             System.out.println("Vehicle with VIN " + VIN + " not found.");
+        }
+    }
 
-        }
-    }
-    public static void getAllVehicles() {
-        for (Vehicle vehicle : vehicle){
-
-            String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                    vehicle.getVin(),
-                    vehicle.getYear(),
-                    vehicle.getMake(),
-                    vehicle.getModel(),
-                    vehicle.getVehicleType(),
-                    vehicle.getColor(),
-                    vehicle.getOdometer(),
-                    vehicle.getPrice());
-            System.out.println(line);
-        }
-    }
-    public static void getVehiclesByMake(String Make){
-        for (Vehicle vehicle : vehicle){
-            if (vehicle.getMake().equalsIgnoreCase(Make)){
-            String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                    vehicle.getVin(),
-                    vehicle.getYear(),
-                    vehicle.getMake(),
-                    vehicle.getModel(),
-                    vehicle.getVehicleType(),
-                    vehicle.getColor(),
-                    vehicle.getOdometer(),
-                    vehicle.getPrice());
-            System.out.println(line);}
-        }
-    }
-    public static void getVehiclesByModel(String Model){
-        for (Vehicle vehicle : vehicle){
+    public ArrayList<Vehicle> getVehiclesByModel(String Model){
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles){
             if (vehicle.getModel().equalsIgnoreCase(Model)){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
+                matching.add(vehicle);
+            }
         }
+        return matching;
     }
-    public static void getVehicleByMakeModel(String Make, String Model){
-        for (Vehicle vehicle : vehicle){
+    public ArrayList<Vehicle> getVehicleByMakeModel(String Make, String Model){
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles){
             if (vehicle.getModel().equalsIgnoreCase(Model) && vehicle.getMake().equalsIgnoreCase(Make)){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
+                matching.add(vehicle);
+            }
         }
-    }
-    public static void getVehiclesByType(String Type){
-        for (Vehicle vehicle : vehicle){
-            if (vehicle.getVehicleType().equalsIgnoreCase(Type)){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
-        }
-    }
-    public static void getVehiclesByColor(String Color){
-        for (Vehicle vehicle : vehicle){
-            if (vehicle.getColor().equalsIgnoreCase(Color)){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
-        }
-    }
-    public static void getVehiclesByYear(int minYear, int maxYear){
-        for (Vehicle vehicle : vehicle){
-            if (vehicle.getYear()> minYear && vehicle.getYear()< maxYear){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
-        }
-    }
-    public static void getVehiclesByPrice(int minPrice, int maxPrice){
-        for (Vehicle vehicle : vehicle){
-            if (vehicle.getPrice()> minPrice && vehicle.getPrice()< maxPrice){
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
-                        vehicle.getVin(),
-                        vehicle.getYear(),
-                        vehicle.getMake(),
-                        vehicle.getModel(),
-                        vehicle.getVehicleType(),
-                        vehicle.getColor(),
-                        vehicle.getOdometer(),
-                        vehicle.getPrice());
-                System.out.println(line);}
-        }
+        return matching;
     }
 
+    public ArrayList<Vehicle> getVehiclesByType(String Type){
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles){
+            if (vehicle.getVehicleType().equalsIgnoreCase(Type)) {
+                matching.add(vehicle);
+            }
+        }
+        return matching;
+    }
+    public ArrayList<Vehicle> getVehiclesByColor(String Color) {
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getColor().equalsIgnoreCase(Color)) {
+                matching.add(vehicle);
+            }
+        }
+        return matching;
+    }
 
+    public ArrayList<Vehicle> getVehiclesByYear(int minYear, int maxYear) {
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getYear() >= minYear && vehicle.getYear() <= maxYear) {
+                matching.add(vehicle);
+            }
+        }
+        return matching;
+    }
+    public ArrayList<Vehicle> getVehiclesByPrice(int minPrice, int maxPrice) {
+        ArrayList<Vehicle> matching = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getPrice() >= minPrice && vehicle.getPrice() <= maxPrice) {
+                matching.add(vehicle);
+            }
+        }
+        return matching;
+    }
 
+    public String getName() {
+        return name;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public String getPhone() {
+        return phone;
+    }
 }
+

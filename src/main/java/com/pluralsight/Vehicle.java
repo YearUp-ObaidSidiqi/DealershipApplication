@@ -15,7 +15,7 @@ public class Vehicle {
         this.vin = vin;
         this.year = year;
         this.make = make;
-        Model = model;
+        this.Model = model;
         this.vehicleType = vehicleType;
         this.color = color;
         this.odometer = odometer;
@@ -84,5 +84,18 @@ public class Vehicle {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getEncodedString(){
+        String line;
+        return line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
+                this.getVin(),
+                this.getYear(),
+                this.getMake(),
+                this.getModel(),
+                this.getVehicleType(),
+                this.getColor(),
+                this.getOdometer(),
+                this.getPrice());
     }
 }

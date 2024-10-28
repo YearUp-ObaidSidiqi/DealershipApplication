@@ -5,19 +5,16 @@ import java.util.regex.Pattern;
 
 public class DealershipFileManager{
 
-
-
-    public static void ReadVehiclesFromCSV()  {
-
-        try {
+    public static Dealership ReadVehiclesFromCSV() {
+            Dealership dealership;
             var bufferedReader = new BufferedReader(new FileReader("vehicles.csv"));
-            String input;
-            bufferedReader.readLine();
+            String input = null;
+            String[] token1 = input.split(Pattern.quote("|"));
+            dealership = new Dealership(token1[0], token1[1], token1[2]);
+
             while ((input = bufferedReader.readLine()) != null) {
-
                 String[] tokens = input.split(Pattern.quote("|"));
-
-                Dealership.addVehicle(
+                dealership.addVehicle(
                         Integer.parseInt(tokens[0]),  //int VIN
                         Integer.parseInt(tokens[1]), // int year
                         tokens[2],                  // make
@@ -28,18 +25,16 @@ public class DealershipFileManager{
                         Double.parseDouble(tokens[7]));
             }
             bufferedReader.close();
-        }catch (Exception e){
-            System.out.println("***ERROR!! ArrayList<Vehicles>");
-            System.out.println(e.getMessage());
-        }
+            return dealership;
     }
+
     public static void writeVehiclesToCSV(Dealership dealership) {
         try (
                 var bufferedWriter = new BufferedWriter(new FileWriter("vehicles.csv"))) {
             // Write header (if needed)
-            bufferedWriter.write(Dealership.name+"|"+Dealership.address+"|"+Dealership.phone+"\n");
+            bufferedWriter.write(dealership.getName()+"|"+dealership.getAddress()+"|"+dealership.getPhone()+"\n");
 
-            for (Vehicle vehicle : Dealership.vehicle) {
+            for (Vehicle vehicle : dealership.vehicles) {
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f\n",
                         vehicle.getVin(),
                         vehicle.getYear(),
@@ -56,4 +51,5 @@ public class DealershipFileManager{
             System.out.println(e.getMessage());
         }
     }
+
 }
