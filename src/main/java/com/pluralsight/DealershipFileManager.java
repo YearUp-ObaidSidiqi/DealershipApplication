@@ -5,10 +5,11 @@ import java.util.regex.Pattern;
 
 public class DealershipFileManager{
 
-    public static Dealership ReadVehiclesFromCSV() {
-            Dealership dealership;
-            var bufferedReader = new BufferedReader(new FileReader("vehicles.csv"));
-            String input = null;
+    public static Dealership ReadVehiclesFromCSV(String fileName) throws IOException {
+        Dealership dealership;
+
+            var bufferedReader = new BufferedReader(new FileReader(fileName));
+            String input = bufferedReader.readLine();
             String[] token1 = input.split(Pattern.quote("|"));
             dealership = new Dealership(token1[0], token1[1], token1[2]);
 
@@ -25,7 +26,7 @@ public class DealershipFileManager{
                         Double.parseDouble(tokens[7]));
             }
             bufferedReader.close();
-            return dealership;
+        return dealership;
     }
 
     public static void writeVehiclesToCSV(Dealership dealership) {

@@ -20,9 +20,11 @@ public class Dealership {
         vehicles.add(new Vehicle(vin, Year, Make, Model, Type, Color, Odometer, Price));
     }
 
+
     public ArrayList<Vehicle> getAllVehicles() {
         return vehicles;
     }
+
     public ArrayList<Vehicle> getVehiclesByMake(String Make) {
         ArrayList<Vehicle> matching = new ArrayList<>();
 
