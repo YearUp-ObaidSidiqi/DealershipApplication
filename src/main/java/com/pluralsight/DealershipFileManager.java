@@ -33,12 +33,13 @@ public class DealershipFileManager{
             System.out.println(e.getMessage());
         }
     }
-   /* public static void writeVehiclesToCSV(Dealership dealership) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("vehicles.csv"))) {
+    public static void writeVehiclesToCSV(Dealership dealership) {
+        try (
+                var bufferedWriter = new BufferedWriter(new FileWriter("vehicles.csv"))) {
             // Write header (if needed)
-            writer.write("D & B Used Cars|111 Old Benbrook Rd|817-555-5555\n");
+            bufferedWriter.write(Dealership.name+"|"+Dealership.address+"|"+Dealership.phone+"\n");
 
-            for (Vehicle vehicle : dealership.vehicle ) {
+            for (Vehicle vehicle : Dealership.vehicle) {
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f\n",
                         vehicle.getVin(),
                         vehicle.getYear(),
@@ -48,11 +49,11 @@ public class DealershipFileManager{
                         vehicle.getColor(),
                         vehicle.getOdometer(),
                         vehicle.getPrice());
-                writer.write(line);
+                bufferedWriter.write(line);
             }
         } catch (IOException e) {
             System.out.println("***ERROR!! Writing to CSV");
             System.out.println(e.getMessage());
         }
-    }*/
+    }
 }

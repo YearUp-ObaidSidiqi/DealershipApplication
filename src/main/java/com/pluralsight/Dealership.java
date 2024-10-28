@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class Dealership {
 
-   private static ArrayList<Vehicle> vehicle = new ArrayList<Vehicle>();
+   static  ArrayList<Vehicle> vehicle = new ArrayList<Vehicle>();
+
+   final static String name = "D & B Used Cars";
+   final static String address = "111 Old Benbrook Rd";
+   final static String phone = "817-555-5555";
 
     public static void addVehicle(int VIN, int Year, String Make, String Model, String Type, String Color, int Odometer, double Price) {
         vehicle.add(new Vehicle(VIN, Year, Make, Model, Type, Color, Odometer, Price));
@@ -62,6 +66,21 @@ public class Dealership {
     public static void getVehiclesByModel(String Model){
         for (Vehicle vehicle : vehicle){
             if (vehicle.getModel().equalsIgnoreCase(Model)){
+                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
+                        vehicle.getVin(),
+                        vehicle.getYear(),
+                        vehicle.getMake(),
+                        vehicle.getModel(),
+                        vehicle.getVehicleType(),
+                        vehicle.getColor(),
+                        vehicle.getOdometer(),
+                        vehicle.getPrice());
+                System.out.println(line);}
+        }
+    }
+    public static void getVehicleByMakeModel(String Make, String Model){
+        for (Vehicle vehicle : vehicle){
+            if (vehicle.getModel().equalsIgnoreCase(Model) && vehicle.getMake().equalsIgnoreCase(Make)){
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%.2f",
                         vehicle.getVin(),
                         vehicle.getYear(),
